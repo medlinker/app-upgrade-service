@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config>
+  <appname>testXml</appname>
+  <host>0.0.0.0</host>
+  <port>8888</port>
+</config>

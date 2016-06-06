@@ -1,0 +1,21 @@
+{
+    "packages": {
+        "android": {
+            "version":"4.0.0",
+            "title":"android 4.0.0 升级",
+            "desc":"新功能增加",
+            "url":"http://medlinker.com/apk/4.0.0_${channel}.apk"
+        },
+        "ios": {
+            "version":"3.0.0",
+            "title":"ios 3.0.0 升级",
+            "desc":"ios可以升级啦！",
+            "url":"http://store.apple.com/download?id=${channel}"
+        }
+    },
+    "rules": [
+        {"platform": "android", "minVersion": "2.0.0", "maxVersion": "3.0.0", "action": 2},
+        {"platform": "android", "minVersion": "3.0.0", "maxVersion": "4.0.0", "action": 1},
+        {"platform": "ios", "minVersion": "2.0.0", "maxVersion": "3.0.0", "action": 1}
+    ]
+}
