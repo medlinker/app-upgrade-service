@@ -39,10 +39,18 @@ func main() {
 
 func upgrade(c *gin.Context) {
 	req := models.RequestParam{}
-	req.Platform = strings.ToLower(c.Query("platform"))
-	req.ClientVersion = strings.ToLower(c.Query("clientVersion"))
-	req.ClientChannel = c.Query("clientChannel")
+	reqMethod := c.Request.Method
+	if reqMethod == "GET" {
+		req.Platform = strings.ToLower(c.Query("platform"))
+		req.ClientVersion = strings.ToLower(c.Query("clientVersion"))
+		req.ClientChannel = c.Query("clientChannel")
+	} else if reqMethod == "POST" {
+		req.Platform = strings.ToLower(c.PostForm("platform"))
+		req.ClientVersion = strings.ToLower(c.PostForm("clientVersion"))
+		req.ClientChannel = c.PostForm("clientChannel")
+	}
 	if req.Illegal() {
+		Logger.Error(req)
 		c.JSON(http.StatusOK, "request params illegal!")
 		return
 	}
@@ -56,9 +64,9 @@ func upgrade(c *gin.Context) {
 		resp.ClientChannel = req.ClientChannel
 		resp.CurrentVersion = platform.Version
 		if strings.TrimSpace(platform.Version) == req.ClientVersion {
-			data.Action = models.NEWEST
+			resp.Data.Action = models.NEWEST
 		} else {
-			data.Action = generateResponse(req)
+			resp.Data.Action = generateResponse(req)
 		}
 		c.JSON(http.StatusOK, resp)
 		return
